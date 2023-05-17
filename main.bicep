@@ -2,7 +2,7 @@ param adminUsername string
 param adminPassword secureString
 
 resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
-  name: 'myVNet'
+  name: 'az_dfx_vnet'
   location: resourceGroup().location
   properties: {
     addressSpace: {
@@ -12,7 +12,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
     }
     subnets: [
       {
-        name: 'mySubnet'
+        name: 'az_dfx_vnet_subnet01'
         properties: {
           addressPrefix: '10.0.0.0/24'
         }
@@ -22,15 +22,15 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
 }
 
 resource publicIp 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
-  name: 'myPublicIP'
+  name: 'az_dfx_linuxvm_public_ip'
   location: resourceGroup().location
   properties: {
-    publicIPAllocationMethod: 'Dynamic'
+    publicIPAllocationMethod: 'Static'
   }
 }
 
 resource nsg 'Microsoft.Network/networkSecurityGroups@2021-02-01' = {
-  name: 'myNSG'
+  name: 'az_dfx_vnet_subnet01_nsg'
   location: resourceGroup().location
   properties: {
     securityRules: [
@@ -51,12 +51,12 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2021-02-01' = {
 }
 
 resource nic 'Microsoft.Network/networkInterfaces@2021-02-01' = {
-  name: 'myNIC'
+  name: 'az_dfx_linux_vm_nic'
   location: resourceGroup().location
   properties: {
     ipConfigurations: [
       {
-        name: 'myNICConfig'
+        name: 'az_dfx_linux_vm_nic_ipconfig'
         properties: {
           subnet: {
             id: vnet.subnets[0].id
@@ -75,11 +75,11 @@ resource nic 'Microsoft.Network/networkInterfaces@2021-02-01' = {
 }
 
 resource vm 'Microsoft.Compute/virtualMachines@2021-07-01' = {
-  name: 'myVM'
+  name: 'az_dfx_linux_vm'
   location: resourceGroup().location
   properties: {
     hardwareProfile: {
-      vmSize: 'Standard_DS1_v2'
+      vmSize: 'Standard_B2ms'
     }
     storageProfile: {
       imageReference: {
@@ -93,7 +93,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-07-01' = {
       }
     }
     osProfile: {
-      computerName: 'myVM'
+      computerName: 'az_dfx_linux_vm'
       adminUsername: adminUsername
       adminPassword: adminPassword
       linuxConfiguration: {
