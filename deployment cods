@@ -1,3 +1,7 @@
 az deployment group create --resource-group Devops-deploy --template-file main.bicep --parameters adminUsername=<admin-username>
 
 #Replace <admin-username> with a unique username. You'll also be prompted to enter adminPasswordOrKey.
+
+https://mslearn.cloudguides.com/en-us/guides/Minimize%20permission%20risks%20with%20Microsoft%20Entra%20Permissions%20Management
+
+http://vunvulearadu.blogspot.com/2019/11/aws-ad-and-aws-cognito-features-list.html
